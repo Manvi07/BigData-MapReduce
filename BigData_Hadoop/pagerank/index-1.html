@@ -1,0 +1,27 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Unknown </title></head><body>
+<h1 id="pagerank">PageRank</h1>
+<p>PageRank is a function that assigns real numbers to every page on the web. Google uses a variation of this algorithm in its serach queries. This repository contains my PageRank implementations in some ways.</p>
+<h3 id="pagerankpy"><code>PageRank.py</code></h3>
+<p>A naive approach to create a random graph and rank the nodes (pages) iteratively using the Matrix Power method and calculate PageRank score. <br />
+Usage:  <code>python PageRank.py</code></p>
+<h3 id="pagerank_efficientpy"><code>PageRank_efficient.py</code></h3>
+<p>A modification of the above approach that uses <code>numpy</code> library for broadcasting and Matrix multiplication for time efficiency. This program also handles the cases of <strong>Dangling Nodes</strong> and <strong>cycles</strong> in graphs by introducing the <strong>Damping Factor</strong> ,<code>d</code>, unlike the previous implementation. <br />
+Usage:  <code>python PageRank_efficient.py</code><br /></p>
+<p><em>Experimentally, Numpy vectorization and broadcasting in this implementation reduces the running time by a <code>factor of 10</code> as compared to the naive approach.</em>  </p>
+<h3 id="hadoop_mapreduce">Hadoop_MapReduce</h3>
+<p>This folder has an <code>inputFile.txt</code> where the <code>pagerank_MapReduce.py</code> script saves and modifies the matrix after each iteration. <br />
+Usage: <code>python pagerank_MapReduce.py</code> <br />
+Matrix multiplication is taken care of by the <code>mapper</code> and <code>reducer</code> scripts, though mapping and reducing part has not been included in the <code>pagerank_MapReduce.py</code> because the code will change depending on the Hadoop versions and dfs file name. <br />
+Usage: <code>cat &lt;inputFile&gt; | python mapper.py | sort | python reducer.py</code></p>
+<h3 id="spark_implementation">Spark_implementation</h3>
+<p>The script <code>generateGraph.py</code> is used to generate a random graph with 100 edges (can be modified) and store the edges in <code>pagerank.txt</code> in the format: <br />
+Node1      Neighbour of node1 <br />
+Node2      Neighbour of node2 <br />
+. <br />
+. <br /></p>
+<p>Copy the file to HDFS using:  
+<code>hdfs dfs -put pagerank.txt &lt;Name_of_HDFS_folder&gt;</code></p>
+<p><code>spark_pagerank.py</code> is a program that reads input from HDFS file <code>pagerank.txt</code>, calculates the PageRank score of pages using the hyperlinks method and computes their rank.<br />
+Usage: <code>python spark_pagerank.py &lt;pagerank.txt&gt; &lt;no. of iterations&gt;</code> <br />
+Requirement: HDFS nodes should be running <br /></p>
+</body></html>
